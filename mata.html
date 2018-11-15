@@ -68,67 +68,54 @@
       </div>
     </div>
   </div>
-
  <div class="demo-frame">
     <div class="demo-container">
       <video id="video" width="510" height="380" preload autoplay loop muted></video>
       <canvas id="canvas" width="510" height="380"></canvas>
     </div>
   </div>
-
 <br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br>
-  
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<audio style="margin-left: 300px;" controls autoplay>
+  <source src="tulang mata.mp4" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
   <script>
     window.onload = function() {
 
     var img = document.createElement("img");
     img.src ='img/Cross.png'
     var img2 = document.createElement("img");
-    img2.src ='img/skull.png'
+    img2.src ='img/tulangmata.png'
       var video = document.getElementById('video');
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
 
-       var tracker = new tracking.ObjectTracker(['face']);
-      tracker.setInitialScale(4);
-      tracker.setStepSize(2);
-      tracker.setEdgesDensity(0.1);
 
-      var tracker2 = new tracking.ObjectTracker(['eye','mouth']);
+      var tracker2 = new tracking.ObjectTracker(['eye']);
       tracker2.setInitialScale(1);
       tracker2.setStepSize(2);
       tracker2.setEdgesDensity(0.1);
 
-      tracking.track('#video', tracker, { camera: true });
+      tracking.track('#video', tracker2, { camera: true });
 
-      tracker.on('track', function(event) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        event.data.forEach(function(rect) {
-              context.drawImage(img2, rect.x -10, rect.y -10, rect.width * 1, rect.height *1.2);
-        });
-      }); 
 
       tracker2.on('track', function(event) {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         event.data.forEach(function(rect) {
-              context.drawImage(img, rect.x -15, rect.y -10, rect.width * 1.5, rect.height *2);
+              context.drawImage(img2, rect.x -10, rect.y -10, rect.width * 2, rect.height *1.5);
         });
       });
 
       var gui = new dat.GUI();
-      gui.add(tracker, 'edgesDensity', 0.1, 0.5).step(0.01);
-      gui.add(tracker, 'initialScale', 1.0, 10.0).step(0.1);
-      gui.add(tracker, 'stepSize', 1, 5).step(0.1);
+      gui.add(tracker2, 'edgesDensity', 0.1, 0.5).step(0.01);
+      gui.add(tracker2, 'initialScale', 1.0, 10.0).step(0.1);
+      gui.add(tracker2, 'stepSize', 1, 5).step(0.1);
 
-      var gui2 = new dat.GUI();
-      gui2.add(tracker2, 'edgesDensity', 0.1, 0.5).step(0.01);
-      gui2.add(tracker2, 'initialScale', 1.0, 10.0).step(0.1);
-      gui2.add(tracker2, 'stepSize', 1, 5).step(0.1);
     };
   </script>
+
 
   </div>
   <section class="page1_header">
